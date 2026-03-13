@@ -9,74 +9,126 @@
 </head>
 <body>
     <main>
+        <!-- Hero -->
         <section class="hero">
-            <div class="logo-block">
-                <h1>THE <span>ROOM</span></h1>
-            </div>
-            <div class="countdown">
+            <img src="Images/logoTheRoom.png" alt="The Room" class="logo">
+            <div class="countdown" id="countdown">
                 <div class="countdown-item">
-                    <span class="countdown-value">12</span>
+                    <span class="countdown-value" id="days">--</span>
                     <span class="countdown-label">Jours</span>
                 </div>
                 <div class="countdown-item">
-                    <span class="countdown-value">23</span>
+                    <span class="countdown-value" id="hours">--</span>
                     <span class="countdown-label">Heures</span>
                 </div>
                 <div class="countdown-item">
-                    <span class="countdown-value">07</span>
+                    <span class="countdown-value" id="minutes">--</span>
                     <span class="countdown-label">Min</span>
                 </div>
             </div>
-            <a href="event.html" class="btn-primary">S'inscrire</a>
+            <a href="#" class="btn-primary">S'inscrire</a>
         </section>
 
+        <!-- About -->
         <section class="about">
             <h2>The Room, c'est quoi ?</h2>
             <p>
-                Faites partie d'une expérience de jeu immersif à 5 joueurs. Testez votre
-                esprit d'équipe à travers plusieurs épreuves pour espérer en sortir...
+                Le but de <strong>The Room</strong> est de proposer une expérience immersive audio et visuelle.
+                Les 5 joueurs seront enfermés dans une salle dans laquelle des projections leur donneront
+                l'impression d'être coupés du monde. À la manière d'un <strong>Escape Game</strong>, ils devront
+                triompher de toutes les épreuves pour espérer en sortir.
             </p>
         </section>
 
+        <!-- Audience -->
         <section class="audience">
             <h2>À qui s'adresse The Room ?</h2>
-            <div class="audience-grid">
-                <div class="audience-item">&#127919; À partir de 15 ans</div>
-                <div class="audience-item">&#128188; Collègues de travail (team building)</div>
-                <div class="audience-item">&#127891; Étudiants</div>
-                <div class="audience-item">&#127918; Amateurs d'expériences interactives et innovantes</div>
-                <div class="audience-item">&#129309; Groupes d'amis</div>
+            <div class="audience-box">
+                <ul class="audience-list">
+                    <li>&#127919; À partir de 15 ans</li>
+                    <li>&#127891; Étudiants</li>
+                    <li>&#129309; Groupes d'amis</li>
+                </ul>
+                <ul class="audience-list">
+                    <li>&#128188; Collègues de travail (team building)</li>
+                    <li>&#127918; Amateurs d'expériences interactives et innovantes</li>
+                </ul>
             </div>
         </section>
 
+        <!-- Pillars -->
         <section class="pillars">
             <div class="pillar">
-                <div class="pillar-icon">&#9876;</div>
+                <div class="pillar-icon">
+                    <img src="Images/strategy-duotone.svg" alt="Stratégie">
+                </div>
                 <h3>Stratégie</h3>
             </div>
             <div class="pillar">
-                <div class="pillar-icon">&#128100;&#128100;</div>
+                <div class="pillar-icon">
+                    <img src="Images/stab1.png" alt="Trahison">
+                </div>
                 <h3>Trahison</h3>
             </div>
             <div class="pillar">
-                <div class="pillar-icon">&#129309;</div>
+                <div class="pillar-icon">
+                    <img src="Images/friendship.svg" alt="Amitié">
+                </div>
                 <h3>Amitié</h3>
             </div>
         </section>
 
+        <!-- CTA -->
         <section class="cta">
             <h2>Prêts à entrer dans</h2>
-            <h2 class="cta-title">THE <span>ROOM</span> ?</h2>
-            <a href="event.html" class="btn-primary">S'inscrire</a>
+            <p class="cta-title">THE <span>ROOM</span> ?</p>
+            <a href="#" class="btn-primary">S'inscrire</a>
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <span class="footer-logo">THE <span>ROOM</span></span>
-            <span class="footer-email">the.room@gmail.com</span>
+            <div class="footer-logo">
+                <img src="Images/logoTheRoom.png" alt="The Room">
+            </div>
+            <div class="footer-right">
+                <span class="footer-email">the.room@gmail.com</span>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Instagram"><img src="Images/instagram.svg" alt="Instagram"></a>
+                    <a href="#" aria-label="Facebook"><img src="Images/facebook.svg" alt="Facebook"></a>
+                    <a href="#" aria-label="Twitch"><img src="Images/twitch.svg" alt="Twitch"></a>
+                </div>
+            </div>
         </div>
         <p class="copyright">&copy; Copyright 2026</p>
     </footer>
+
+    <script>
+        // Countdown - set your event date here
+        const eventDate = new Date('2026-03-26T18:00:00');
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = eventDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+    </script>
 </body>
 </html>
