@@ -5,39 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Room</title>
     <link rel="stylesheet" href="index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <main>
         <!-- Hero -->
         <section class="hero">
-            <img src="Images/logoTheRoom.png" alt="The Room" class="logo">
-            <div class="countdown" id="countdown">
-                <div class="countdown-item">
-                    <span class="countdown-value" id="days">--</span>
-                    <span class="countdown-label">Jours</span>
+            <div class="hero-left">
+                <h1 class="glitch" data-text="Enfermés. Trahis. Survivrez-vous ?">Enfermés. Trahis. Survivrez-vous&nbsp;?</h1>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">--</span>
+                        <span class="countdown-label">Jours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">--</span>
+                        <span class="countdown-label">Heures</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">--</span>
+                        <span class="countdown-label">Min</span>
+                    </div>
                 </div>
-                <div class="countdown-item">
-                    <span class="countdown-value" id="hours">--</span>
-                    <span class="countdown-label">Heures</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-value" id="minutes">--</span>
-                    <span class="countdown-label">Min</span>
-                </div>
+                <a href="#" class="btn-primary">S'inscrire</a>
             </div>
-            <a href="#" class="btn-primary">S'inscrire</a>
+            <div class="hero-right">
+                <img src="Images/logoTheRoom.png" alt="The Room" class="logo">
+            </div>
+            <img src="Images/pose.png" alt="Mascotte" class="mascot-hero">
         </section>
 
         <!-- About -->
-        <section class="about">
-            <h2>The Room, c'est quoi ?</h2>
-            <p>
-                Le but de <strong>The Room</strong> est de proposer une expérience immersive audio et visuelle.
-                Les 5 joueurs seront enfermés dans une salle dans laquelle des projections leur donneront
-                l'impression d'être coupés du monde. À la manière d'un <strong>Escape Game</strong>, ils devront
-                triompher de toutes les épreuves pour espérer en sortir.
-            </p>
+        <section class="about" id="about">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>The Room, c'est quoi ?</h2>
+                    <p>
+                        Le but de <strong>The Room</strong> est de proposer une expérience immersive audio et visuelle.
+                        Les 5 joueurs seront enfermés dans une salle dans laquelle des projections leur donneront
+                        l'impression d'être coupés du monde. À la manière d'un <strong>Escape Game</strong>, ils devront
+                        triompher de toutes les épreuves pour espérer en sortir.
+                    </p>
+                </div>
+                <img src="Images/wave.png" alt="Mascotte" class="mascot-about">
+            </div>
         </section>
 
         <!-- Audience -->
@@ -51,7 +62,7 @@
                 </ul>
                 <ul class="audience-list">
                     <li>&#128188; Collègues de travail (team building)</li>
-                    <li>&#127918; Amateurs d'expériences interactives et innovantes</li>
+                    <li>&#127918; Amateurs d'expériences interactives</li>
                 </ul>
             </div>
         </section>
@@ -104,7 +115,6 @@
     </footer>
 
     <script>
-        // Countdown - set your event date here
         const eventDate = new Date('2026-03-26T18:00:00');
 
         function updateCountdown() {
