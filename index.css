@@ -31,10 +31,9 @@ main {
 .hero {
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     min-height: 100vh;
-    padding: 3rem 6vw;
+    padding: 2.5rem 6vw 0;
     overflow: hidden;
 
     /* Glitchy gradient background */
@@ -94,23 +93,39 @@ main {
     100% { opacity: 0.8; }
 }
 
-.hero-left {
+/* Logo at the top of hero */
+.hero-logo {
     position: relative;
     z-index: 2;
-    max-width: 520px;
-    flex-shrink: 0;
-}
-
-.hero-right {
-    position: relative;
-    z-index: 2;
-    flex-shrink: 0;
-}
-
-.logo {
-    width: clamp(180px, 20vw, 320px);
+    width: clamp(100px, 12vw, 180px);
     height: auto;
     filter: drop-shadow(0 0 30px rgba(92, 76, 252, 0.5));
+    margin-bottom: 1.5rem;
+}
+
+/* Main hero area: text on left, mascot on right */
+.hero-main {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.hero-text {
+    flex: 1;
+    padding-bottom: clamp(3rem, 8vh, 6rem);
+    min-width: 0;
+}
+
+.hero-mascot {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
 }
 
 /* Glitch title */
@@ -166,16 +181,10 @@ main {
 
 /* Mascot in hero */
 .mascot-hero {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: clamp(300px, 50vh, 550px);
+    height: clamp(280px, 45vh, 520px);
     width: auto;
-    z-index: 2;
-    opacity: 0.15;
-    filter: drop-shadow(0 0 20px rgba(255, 46, 126, 0.3));
-    pointer-events: none;
+    filter: drop-shadow(0 0 30px rgba(255, 46, 126, 0.4));
+    object-fit: contain;
 }
 
 /* Countdown */
@@ -238,6 +247,10 @@ section {
     max-width: 900px;
     margin: 0 auto;
     padding: 0 1.5rem;
+}
+
+.hero {
+    max-width: none;
 }
 
 h2 {
@@ -450,37 +463,30 @@ footer {
 }
 
 /* ===== RESPONSIVE ===== */
+
+/* Tablet */
 @media (max-width: 768px) {
     .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 2.5rem 1.5rem;
+        padding: 2rem 1.5rem 0;
         min-height: auto;
-        padding-bottom: 3rem;
     }
 
-    .hero-left {
-        max-width: 100%;
-        order: 2;
+    .hero-logo {
+        width: 90px;
+        margin-bottom: 1rem;
     }
 
-    .hero-right {
-        order: 1;
-        margin-bottom: 1.5rem;
+    .hero-main {
+        align-items: flex-end;
+        gap: 1rem;
     }
 
-    .countdown {
-        justify-content: center;
+    .hero-text {
+        padding-bottom: 2.5rem;
     }
 
     .mascot-hero {
-        position: relative;
-        left: auto;
-        transform: none;
-        height: 200px;
-        opacity: 0.2;
-        order: 3;
-        margin-top: 1rem;
+        height: clamp(180px, 30vh, 280px);
     }
 
     .about-content {
@@ -519,18 +525,54 @@ footer {
     }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
-    .logo {
-        width: 160px;
+    .hero {
+        padding: 1.5rem 1rem 0;
+    }
+
+    .hero-logo {
+        width: 70px;
+        margin-bottom: 0.8rem;
+    }
+
+    .hero-main {
+        gap: 0.5rem;
+    }
+
+    .hero-text {
+        padding-bottom: 2rem;
+    }
+
+    .glitch {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+    }
+
+    .mascot-hero {
+        height: clamp(140px, 25vh, 200px);
+    }
+
+    .countdown {
+        gap: 0.4rem;
+        margin: 1.2rem 0;
     }
 
     .countdown-item {
-        min-width: 58px;
-        padding: 0.5rem 0.7rem;
+        min-width: 52px;
+        padding: 0.4rem 0.6rem;
     }
 
     .countdown-value {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
+    }
+
+    .countdown-label {
+        font-size: 0.5rem;
+    }
+
+    .btn-primary {
+        padding: 0.6rem 1.6rem;
+        font-size: 0.8rem;
     }
 
     .pillar-icon {
