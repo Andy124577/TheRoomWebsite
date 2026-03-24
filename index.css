@@ -43,50 +43,8 @@ main {
 /* ===== GLITCH TEXT UTILITY ===== */
 .glitch-text {
     position: relative;
-    text-shadow:
-        0.05em 0 0 rgba(255, 46, 126, 0.75),
-        -0.025em -0.05em 0 rgba(92, 76, 252, 0.75),
-        0.025em 0.05em 0 rgba(255, 183, 127, 0.75);
-    animation: glitch 500ms infinite;
 }
 
-@keyframes glitch {
-    0% {
-        text-shadow: 0.05em 0 0 rgba(255, 46, 126, 0.75),
-                    -0.05em -0.025em 0 rgba(92, 76, 252, 0.75),
-                    -0.025em 0.05em 0 rgba(255, 183, 127, 0.75);
-    }
-    14% {
-        text-shadow: 0.05em 0 0 rgba(255, 46, 126, 0.75),
-                    -0.05em -0.025em 0 rgba(92, 76, 252, 0.75),
-                    -0.025em 0.05em 0 rgba(255, 183, 127, 0.75);
-    }
-    15% {
-        text-shadow: -0.05em -0.025em 0 rgba(255, 46, 126, 0.75),
-                    0.025em 0.025em 0 rgba(92, 76, 252, 0.75),
-                    -0.05em -0.05em 0 rgba(255, 183, 127, 0.75);
-    }
-    49% {
-        text-shadow: -0.05em -0.025em 0 rgba(255, 46, 126, 0.75),
-                    0.025em 0.025em 0 rgba(92, 76, 252, 0.75),
-                    -0.05em -0.05em 0 rgba(255, 183, 127, 0.75);
-    }
-    50% {
-        text-shadow: 0.025em 0.05em 0 rgba(255, 46, 126, 0.75),
-                    0.05em 0 0 rgba(92, 76, 252, 0.75),
-                    0.05em -0.05em 0 rgba(255, 183, 127, 0.75);
-    }
-    99% {
-        text-shadow: 0.025em 0.05em 0 rgba(255, 46, 126, 0.75),
-                    0.05em 0 0 rgba(92, 76, 252, 0.75),
-                    0.05em -0.05em 0 rgba(255, 183, 127, 0.75);
-    }
-    100% {
-        text-shadow: -0.025em 0 0 rgba(255, 46, 126, 0.75),
-                    -0.025em -0.025em 0 rgba(92, 76, 252, 0.75),
-                    -0.025em -0.05em 0 rgba(255, 183, 127, 0.75);
-    }
-}
 
 /* ===== NAVBAR ===== */
 .navbar {
@@ -188,6 +146,8 @@ main {
   z-index: -1; /* Pushes the video behind other content */
   /* Optional: use object-fit to ensure the video covers the area without stretching */
   object-fit: cover; 
+  filter: blur(8px); /* Applies the blur effect */
+  -webkit-filter: blur(8px); /* For compatibility with WebKit browsers */
 }
 
 .content {
@@ -305,6 +265,7 @@ main {
     font-weight: 900;
     color: #ffb77f;
     line-height: 1;
+
 }
 
 .countdown-label {
@@ -314,6 +275,7 @@ main {
     letter-spacing: 1.5px;
     margin-top: 0.4rem;
     font-weight: 300;
+        -webkit-text-stroke: 1px white;
 }
 
 /* ===== BUTTONS ===== */
