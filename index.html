@@ -38,73 +38,127 @@
 
         <!-- About -->
         <section class="about" id="about">
-            <h2>The Room, c'est quoi ?</h2>
-            <div class="about-content">
+            <div class="about-grid">
                 <div class="about-text">
+                    <h2 class="about-heading mokoto">The Room,<br><span class="text-secondary">c'est quoi ?</span></h2>
+                    <div class="accent-bar"></div>
                     <p>
-                        Le but de <strong>The Room</strong> est de proposer une expérience immersive audio et visuelle.
+                        Le but de The Room est de proposer une expérience immersive audio et visuelle.
                         Les 5 joueurs seront enfermés dans une salle dans laquelle des projections leur donneront
-                        l'impression d'être coupés du monde. À la manière d'un <strong>Escape Game</strong>, ils devront
+                        l'impression d'être coupés du monde. À la manière d'un Escape Game, ils devront
                         triompher de toutes les épreuves pour espérer en sortir.
                     </p>
                 </div>
-                <div class="about-image">
-                    <img src="Images/wave.png" alt="L'expérience The Room">
+                <div class="about-image-wrap">
+                    <div class="about-image-glow"></div>
+                    <div class="about-image-frame">
+                        <img src="Images/mapExp.png" alt="L'expérience The Room">
+                        <span class="image-tag">LIVE_FEED_01</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Pillars -->
         <section class="pillars">
-            <div class="pillar">
-                <div class="pillar-icon">
-                    <img src="Images/strategy-duotone.svg" alt="Stratégie">
+            <div class="pillars-grid">
+                <div class="pillar">
+                    <img src="Images/strategy-duotone.svg" alt="Stratégie" class="pillar-img text-primary">
+                    <h3 class="pillar-title">Stratégie</h3>
+                    <p class="pillar-desc">Analysez chaque fréquence. Chaque seconde compte.</p>
                 </div>
-                <h3>Stratégie</h3>
-            </div>
-            <div class="pillar">
-                <div class="pillar-icon">
-                    <img width="500px" height="500px" src="Images/stab1.png" alt="Trahison">
+                <div class="pillar pillar-middle">
+                    <img src="Images/stab1.png" alt="Trahison" class="pillar-img text-secondary">
+                    <h3 class="pillar-title">Trahison</h3>
+                    <p class="pillar-desc">En qui pouvez-vous réellement avoir confiance ?</p>
                 </div>
-                <h3>Trahison</h3>
-            </div>
-            <div class="pillar">
-                <div class="pillar-icon">
-                    <img src="Images/friendship.svg" alt="Amitié">
+                <div class="pillar">
+                    <img src="Images/friendship.svg" alt="Amitié" class="pillar-img text-tertiary">
+                    <h3 class="pillar-title">Amitié</h3>
+                    <p class="pillar-desc">Seuls, vous tomberez. Ensemble, vous survivez.</p>
                 </div>
-                <h3>Amitié</h3>
             </div>
         </section>
 
         <!-- Audience -->
         <section class="audience" id="audience">
-            <h2>Cible d'intervention</h2>
-            <div class="audience-box">
-                <div class="audience-list-wrap">
-                    <ul class="audience-list">
-                        <li>&#127919; À partir de 15 ans</li>
-                        <li>&#127891; Étudiants</li>
-                        <li>&#129309; Groupes d'amis</li>
-                        <li>&#128188; Collègues de travail (team building)</li>
-                        <li>&#127918; Amateurs d'expériences interactives</li>
-                    </ul>
+            <div class="audience-grid">
+                <div class="audience-left">
+                    <h2 class="audience-heading mokoto">Cible<br><span class="text-tertiary">d'intervention</span></h2>
+                    <div class="audience-items">
+                        <div class="audience-item border-primary">
+                            <span class="audience-icon">&#128737;</span>
+                            <div>
+                                <h4>15 ans et +</h4>
+                                <p>Une maturité tactique est requise pour naviguer dans le vide.</p>
+                            </div>
+                        </div>
+                        <div class="audience-item border-secondary">
+                            <span class="audience-icon">&#127891;</span>
+                            <div>
+                                <h4>Étudiants</h4>
+                                <p>Testez votre cohésion d'équipe hors des salles de classe.</p>
+                            </div>
+                        </div>
+                        <div class="audience-item border-primary">
+                            <span class="audience-icon">&#129309;</span>
+                            <div>
+                                <h4>Groupes d'amis</h4>
+                                <p>Partagez l'inconnu avec votre cercle le plus proche.</p>
+                            </div>
+                        </div>
+                        <div class="audience-item border-tertiary">
+                            <span class="audience-icon">&#128188;</span>
+                            <div>
+                                <h4>Collègues de travail</h4>
+                                <p>Un team building immersif qui repousse les limites du réel.</p>
+                            </div>
+                        </div>
+                        <div class="audience-item border-primary">
+                            <span class="audience-icon">&#127918;</span>
+                            <div>
+                                <h4>Amateurs d'expériences</h4>
+                                <p>Pour ceux qui cherchent à être acteurs de leur propre aventure.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="audience-image">
+                <div class="audience-right">
+                    <div class="audience-img-card">
+                        <img src="Images/mapExp.png" alt="Amis">
+                        <span class="image-tag">#AMIS</span>
+                    </div>
+                    <div class="audience-img-card audience-img-offset">
+                        <img src="Images/wave.png" alt="Gamers">
+                        <span class="image-tag tag-secondary">#GAMERS</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- CTA -->
         <section class="cta">
-            <h2>Prêt à entrer dans</h2>
-            <p class="cta-title glitch-text">THE <span>ROOM</span> ?</p>
-            <a href="#" class="btn-primary">S'inscrire</a>
+            <div class="cta-line"></div>
+            <div class="cta-inner">
+                <h2 class="cta-heading mokoto">Prêt à entrer dans<br><span class="text-primary">THE ROOM ?</span></h2>
+                <a href="#" class="btn-cta">S'inscrire</a>
+                <p class="cta-sub">Places limitées par protocole. Inscription obligatoire.</p>
+            </div>
+            <div class="cta-glow"></div>
         </section>
     </main>
 
     <footer>
         <div class="footer-inner">
-            <img src="Images/logoTheRoom.png" alt="The Room" class="footer-logo">
+            <div class="footer-brand mokoto">THE ROOM</div>
+            <div class="footer-links">
+                <a href="#">Email</a>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Twitch</a>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-copy">&copy; 2026 The Room Immersive. Void Protocol Initiated.</p>
         </div>
     </footer>
 
