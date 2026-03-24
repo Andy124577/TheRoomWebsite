@@ -27,10 +27,6 @@
                         <span class="countdown-value" id="minutes">--</span>
                         <span class="countdown-label">Minutes</span>
                     </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="seconds">--</span>
-                        <span class="countdown-label">Secondes</span>
-                    </div>
                 </div>
                 <a href="#" class="btn-outline">S'inscrire</a>
             </div>
@@ -138,19 +134,15 @@
 
         <!-- CTA -->
         <section class="cta">
-            <div class="cta-line"></div>
-            <div class="cta-inner">
-                <h2 class="cta-heading mokoto">Prêt à entrer dans<br><span class="text-primary">THE ROOM ?</span></h2>
-                <a href="#" class="btn-cta">S'inscrire</a>
-                <p class="cta-sub">Places limitées par protocole. Inscription obligatoire.</p>
-            </div>
-            <div class="cta-glow"></div>
+            <h2>Prêt à entrer dans</h2>
+            <p class="cta-title glitch-text">THE <span>ROOM</span> ?</p>
+            <a href="#" class="btn-primary">S'inscrire</a>
         </section>
     </main>
 
     <footer>
         <div class="footer-inner">
-            <div class="footer-brand mokoto">THE ROOM</div>
+            <img src="Images/logoTheRoom.png" alt="The Room" class="footer-logo">
             <div class="footer-links">
                 <a href="#">Email</a>
                 <a href="#">Instagram</a>
@@ -158,12 +150,12 @@
                 <a href="#">Twitch</a>
             </div>
             <div class="footer-divider"></div>
-            <p class="footer-copy">&copy; 2026 The Room Immersive. Void Protocol Initiated.</p>
+            <p class="footer-copy">&copy; 2026 The Room Immersive.</p>
         </div>
     </footer>
 
     <script>
-        const eventDate = new Date('2026-03-26T18:00:00');
+        const eventDate = new Date('2026-05-02T18:00:00');
 
         function updateCountdown() {
             const now = new Date();
@@ -173,23 +165,20 @@
                 document.getElementById('days').textContent = '00';
                 document.getElementById('hours').textContent = '00';
                 document.getElementById('minutes').textContent = '00';
-                document.getElementById('seconds').textContent = '00';
                 return;
             }
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
             document.getElementById('days').textContent = String(days).padStart(2, '0');
             document.getElementById('hours').textContent = String(hours).padStart(2, '0');
             document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         }
 
         updateCountdown();
-        setInterval(updateCountdown, 1000);
+        setInterval(updateCountdown, 60000);
 
         // Mobile nav toggle
         const toggle = document.querySelector('.navbar-toggle');
