@@ -146,8 +146,8 @@ main {
   z-index: -1; /* Pushes the video behind other content */
   /* Optional: use object-fit to ensure the video covers the area without stretching */
   object-fit: cover; 
-  filter: blur(8px); /* Applies the blur effect */
-  -webkit-filter: blur(8px); /* For compatibility with WebKit browsers */
+  filter: blur(20px); /* Applies the blur effect */
+  -webkit-filter: blur(20px); /* For compatibility with WebKit browsers */
   pointer-events: none;
 }
 
@@ -477,6 +477,7 @@ main {
     object-fit: contain;
     margin-bottom: 1.5rem;
     transition: transform 0.2s;
+    color: red;
 }
 
 .pillar:hover .pillar-img {
