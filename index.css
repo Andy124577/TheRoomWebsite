@@ -245,7 +245,7 @@ main {
 }
 
 .hero-logo {
-    width: clamp(160px, 22vw, 300px);
+    width: clamp(1000px, 22vw, 300px);
     height: auto;
     filter: drop-shadow(0 0 30px rgba(92, 76, 252, 0.5));
 }
@@ -256,6 +256,7 @@ main {
     justify-content: center;
     gap: clamp(0.6rem, 2vw, 1.2rem);
     width: 100%;
+
 }
 
 .countdown-item {
@@ -267,7 +268,14 @@ main {
     display: flex;
     flex-direction: column;
     min-width: clamp(60px, 12vw, 100px);
-    backdrop-filter: blur(8px);
+
+        /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.7px);
+    -webkit-backdrop-filter: blur(4.7px);
+    border: 1px solid rgba(255, 255, 255, 0.31);
 }
 
 .countdown-value {
@@ -296,7 +304,7 @@ main {
     text-decoration: none;
     font-weight: 700;
     font-size: 1rem;
-    border-radius: 40px;
+    border-radius: 20px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -628,15 +636,17 @@ footer {
     }
 }
 
+
+@media (max-width: 1000px) {
+.hero-logo {
+    width: clamp(500px, 22vw, 300px);
+    height: auto;
+    filter: drop-shadow(0 0 30px rgba(92, 76, 252, 0.5));
+}
+}
+
 /* Mobile */
 @media (max-width: 480px) {
-    .navbar-inner {
-        padding: 0.6rem 1rem;
-    }
-
-    .navbar-logo img {
-        height: 26px;
-    }
 
     .hero {
         padding: 4.5rem 1rem 1.5rem;
