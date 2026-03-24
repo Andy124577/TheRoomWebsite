@@ -146,8 +146,8 @@ main {
   z-index: -1; /* Pushes the video behind other content */
   /* Optional: use object-fit to ensure the video covers the area without stretching */
   object-fit: cover; 
-  filter: blur(20px); /* Applies the blur effect */
-  -webkit-filter: blur(20px); /* For compatibility with WebKit browsers */
+  filter: blur(10px); /* Applies the blur effect */
+  -webkit-filter: blur(10px); /* For compatibility with WebKit browsers */
   pointer-events: none;
 }
 
@@ -163,13 +163,14 @@ main {
 /* Optional: Add a dark overlay to improve text visibility over the video */
 .video-background::after {
   content: '';
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0; /* Place the overlay between the video and the content */
   pointer-events: none;
+  background: rgba(0, 0, 0, 0.5);
+    z-index: 0; /* Place the overlay between the video and the content */
 }
 
 
