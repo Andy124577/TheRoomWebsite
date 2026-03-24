@@ -682,11 +682,19 @@ footer {
     text-transform: uppercase;
     color: rgba(244, 222, 255, 0.5);
     text-decoration: none;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.2s, text-shadow 0.3s;
+    display: inline-block;
 }
 
 .footer-links a:hover {
     color: #ffb77f;
+    transform: scale(1.15);
+    text-shadow: 0 0 8px rgba(255, 183, 127, 0.4);
+}
+
+.footer-links a:active {
+    transform: scale(0.95);
+    color: #ff2e7e;
 }
 
 .footer-divider {
