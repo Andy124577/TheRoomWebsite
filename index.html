@@ -269,7 +269,7 @@
 
         // ===== CONFIGURATION =====
         // TODO: Collez votre URL Google Apps Script ici après déploiement
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkwKCx-DC052hxJt_zxpQ4_cEZ3ONlIalfaEYxCkUxgk5O3TgvtI7MVZ1t-XNtvpPyXQ/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx72M_1Sk_qKFR6VrcFGsFDA0lWPUYDUwSwSRCwiWWiAxpp5iXHw5zz3J97PkIuU60HuA/exec';
 
         const SLOTS = [
             { time: '20:00', label: '20h00' },
@@ -329,7 +329,7 @@
             let takenSlots = [];
             if (APPS_SCRIPT_URL) {
                 try {
-                    const res = await fetch(`${APPS_SCRIPT_URL}?action=getSlots`);
+                    const res = await fetch(`${APPS_SCRIPT_URL}?action=getSlots`, { redirect: 'follow' });
                     const data = await res.json();
                     takenSlots = data.takenSlots || [];
                 } catch (_) {}
@@ -461,7 +461,7 @@
 
             if (APPS_SCRIPT_URL) {
                 try {
-                    const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+                    const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
                     const data = await res.json();
                     if (data.success) {
                         showSuccess(payload.slot);
