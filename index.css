@@ -862,6 +862,7 @@ footer {
     border-color: #ff2e7e;
 }
 
+
 .field-error {
     font-size: 0.68rem;
     color: #ff2e7e;
@@ -1007,7 +1008,7 @@ footer {
 
 .player-fields {
     display: grid;
-    grid-template-columns: 1fr 1fr 80px;
+    grid-template-columns: 1fr 1fr;
     gap: 0.85rem;
     padding: 1rem;
 }
@@ -1090,7 +1091,6 @@ footer {
     #formView { padding: 1.5rem 1rem; }
     .slots-grid { grid-template-columns: repeat(2, 1fr); }
     .player-fields { grid-template-columns: 1fr 1fr; }
-    .player-fields .form-group:last-child { grid-column: span 2; }
 }
 
 @media (max-width: 360px) {

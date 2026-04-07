@@ -175,16 +175,6 @@
 
                 <form id="registrationForm" novalidate>
 
-                    <!-- Email -->
-                    <div class="form-section">
-                        <h3 class="form-section-title">Contact du groupe</h3>
-                        <div class="form-group">
-                            <label for="groupEmail">Adresse email</label>
-                            <input type="email" id="groupEmail" name="email" placeholder="votre@email.com">
-                            <span class="field-error" id="emailError"></span>
-                        </div>
-                    </div>
-
                     <!-- Créneau -->
                     <div class="form-section">
                         <h3 class="form-section-title">Créneau horaire</h3>
@@ -241,7 +231,7 @@
                 <div class="success-content">
                     <div class="success-checkmark">&#10003;</div>
                     <h3 class="success-title mokoto">Inscription confirmée</h3>
-                    <p class="success-message">Un email de confirmation a été envoyé à<br><strong id="confirmedEmail"></strong></p>
+                    <p class="success-message">Votre inscription a été confirmée avec succès.</p>
                     <p class="success-slot">Votre créneau : <span id="confirmedSlot" class="text-tertiary"></span></p>
                     <button class="btn-outline" id="successClose">Fermer</button>
                 </div>
@@ -279,7 +269,7 @@
 
         // ===== CONFIGURATION =====
         // TODO: Collez votre URL Google Apps Script ici après déploiement
-        const APPS_SCRIPT_URL = '';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkwKCx-DC052hxJt_zxpQ4_cEZ3ONlIalfaEYxCkUxgk5O3TgvtI7MVZ1t-XNtvpPyXQ/exec';
 
         const SLOTS = [
             { time: '20:00', label: '20h00' },
@@ -386,16 +376,16 @@
                         <div class="player-card-header">Joueur ${i}</div>
                         <div class="player-fields">
                             <div class="form-group">
-                                <label for="nom${i}">Nom</label>
-                                <input type="text" id="nom${i}" name="nom${i}" placeholder="Dupont">
+                                <input type="text" id="prenom${i}" name="prenom${i}" placeholder="Prénom">
                             </div>
                             <div class="form-group">
-                                <label for="prenom${i}">Prénom</label>
-                                <input type="text" id="prenom${i}" name="prenom${i}" placeholder="Jean">
+                                <input type="text" id="nom${i}" name="nom${i}" placeholder="Nom">
                             </div>
                             <div class="form-group">
-                                <label for="age${i}">Âge</label>
-                                <input type="number" id="age${i}" name="age${i}" placeholder="18" min="15" max="99">
+                                <input type="email" id="email${i}" name="email${i}" placeholder="Courriel">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="age${i}" name="age${i}" placeholder="Âge" min="15" max="99">
                             </div>
                         </div>
                     </div>
@@ -413,13 +403,6 @@
             clearErrors();
             let valid = true;
 
-            const email = document.getElementById('groupEmail');
-            if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-                document.getElementById('emailError').textContent = 'Veuillez entrer une adresse email valide.';
-                email.classList.add('invalid');
-                valid = false;
-            }
-
             if (!document.getElementById('selectedSlot').value) {
                 document.getElementById('slotError').textContent = 'Veuillez sélectionner un créneau.';
                 valid = false;
@@ -435,12 +418,14 @@
                 const nom    = document.getElementById(`nom${i}`);
                 const prenom = document.getElementById(`prenom${i}`);
                 const age    = document.getElementById(`age${i}`);
-                if (!nom.value.trim())                    { nom.classList.add('invalid');    playerError = true; valid = false; }
+                const email  = document.getElementById(`email${i}`);
                 if (!prenom.value.trim())                 { prenom.classList.add('invalid'); playerError = true; valid = false; }
+                if (!nom.value.trim())                    { nom.classList.add('invalid');    playerError = true; valid = false; }
                 if (!age.value || Number(age.value) < 15) { age.classList.add('invalid');   playerError = true; valid = false; }
+                if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.classList.add('invalid'); playerError = true; valid = false; }
             }
             if (playerError) {
-                document.getElementById('playersError').textContent = 'Veuillez remplir tous les champs joueurs (âge minimum 15 ans).';
+                document.getElementById('playersError').textContent = 'Veuillez remplir tous les champs joueurs (âge minimum 15 ans, courriel valide).';
             }
 
             return valid;
@@ -461,14 +446,14 @@
             const players = [];
             for (let i = 1; i <= 5; i++) {
                 players.push({
-                    nom:    document.getElementById(`nom${i}`).value.trim(),
                     prenom: document.getElementById(`prenom${i}`).value.trim(),
+                    nom:    document.getElementById(`nom${i}`).value.trim(),
                     age:    document.getElementById(`age${i}`).value,
+                    email:  document.getElementById(`email${i}`).value.trim(),
                 });
             }
 
             const payload = {
-                email:      document.getElementById('groupEmail').value.trim(),
                 slot:       document.getElementById('selectedSlot').value,
                 experience: document.querySelector('input[name="experience"]:checked').value,
                 players,
@@ -479,7 +464,7 @@
                     const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
                     const data = await res.json();
                     if (data.success) {
-                        showSuccess(payload.email, payload.slot);
+                        showSuccess(payload.slot);
                     } else if (data.error === 'slot_taken') {
                         document.getElementById('slotError').textContent = 'Ce créneau vient d\'être pris. Veuillez en choisir un autre.';
                         loadSlots();
@@ -491,12 +476,11 @@
                 }
             } else {
                 // Mode développement : simulation sans Apps Script
-                setTimeout(() => showSuccess(payload.email, payload.slot), 900);
+                setTimeout(() => showSuccess(payload.slot), 900);
             }
         });
 
-        function showSuccess(email, slot) {
-            document.getElementById('confirmedEmail').textContent = email;
+        function showSuccess(slot) {
             document.getElementById('confirmedSlot').textContent = SLOTS.find(s => s.time === slot)?.label || slot;
             formView.style.display = 'none';
             successView.style.display = '';
