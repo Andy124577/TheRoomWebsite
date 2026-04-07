@@ -15,8 +15,8 @@ function getFromScript(url) {
                 let data = '';
                 res.on('data', chunk => { data += chunk; });
                 res.on('end', () => {
-                    try { resolve(JSON.parse(data)); }
-                    catch (e) { reject(new Error('Invalid JSON: ' + data)); }
+                    try { resolve({ status: res.statusCode, body: JSON.parse(data) }); }
+                    catch (e) { resolve({ status: res.statusCode, raw: data.substring(0, 300), parseError: e.message }); }
                 });
             }).on('error', reject);
         };
@@ -26,9 +26,13 @@ function getFromScript(url) {
 
 module.exports = async function handler(req, res) {
     try {
-        const data = await getFromScript(APPS_SCRIPT_URL);
-        res.status(200).json(data);
+        const result = await getFromScript(APPS_SCRIPT_URL);
+        if (result.body) {
+            res.status(200).json(result.body);
+        } else {
+            res.status(200).json({ takenSlots: [], _debug: result });
+        }
     } catch (e) {
-        res.status(200).json({ takenSlots: [], error: e.message });
+        res.status(200).json({ takenSlots: [], _error: e.message });
     }
 };
