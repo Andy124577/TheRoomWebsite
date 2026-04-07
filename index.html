@@ -327,13 +327,11 @@
         // ===== SLOTS =====
         async function loadSlots() {
             let takenSlots = [];
-            if (APPS_SCRIPT_URL) {
-                try {
-                    const res = await fetch(`${APPS_SCRIPT_URL}?action=getSlots`, { redirect: 'follow' });
-                    const data = await res.json();
-                    takenSlots = data.takenSlots || [];
-                } catch (_) {}
-            }
+            try {
+                const res = await fetch('/api/slots');
+                const data = await res.json();
+                takenSlots = data.takenSlots || [];
+            } catch (_) {}
             renderSlots(takenSlots);
         }
 
@@ -459,24 +457,19 @@
                 players,
             };
 
-            if (APPS_SCRIPT_URL) {
-                try {
-                    const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-                    const data = await res.json();
-                    if (data.success) {
-                        showSuccess(payload.slot);
-                    } else if (data.error === 'slot_taken') {
-                        document.getElementById('slotError').textContent = 'Ce créneau vient d\'être pris. Veuillez en choisir un autre.';
-                        loadSlots();
-                        btn.disabled = false; txtBtn.style.display = ''; loader.style.display = 'none';
-                    } else { throw new Error(); }
-                } catch (_) {
-                    document.getElementById('formErrorGlobal').textContent = 'Une erreur est survenue. Veuillez réessayer.';
+            try {
+                const res  = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const data = await res.json();
+                if (data.success) {
+                    showSuccess(payload.slot);
+                } else if (data.error === 'slot_taken') {
+                    document.getElementById('slotError').textContent = 'Ce créneau vient d\'être pris. Veuillez en choisir un autre.';
+                    loadSlots();
                     btn.disabled = false; txtBtn.style.display = ''; loader.style.display = 'none';
-                }
-            } else {
-                // Mode développement : simulation sans Apps Script
-                setTimeout(() => showSuccess(payload.slot), 900);
+                } else { throw new Error(); }
+            } catch (_) {
+                document.getElementById('formErrorGlobal').textContent = 'Une erreur est survenue. Veuillez réessayer.';
+                btn.disabled = false; txtBtn.style.display = ''; loader.style.display = 'none';
             }
         });
 
