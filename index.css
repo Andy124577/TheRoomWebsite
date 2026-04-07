@@ -925,6 +925,37 @@ footer {
 .slot-card.selected .slot-status { color: #ffb77f; }
 .slot-card.taken .slot-status { color: rgba(255, 46, 126, 0.6); }
 
+.slot-card.skeleton {
+    cursor: default;
+    pointer-events: none;
+    border-color: rgba(92, 76, 252, 0.1);
+}
+
+.slot-skeleton-time {
+    height: 1.4rem;
+    width: 60%;
+    margin: 0 auto 0.5rem;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+}
+
+.slot-skeleton-status {
+    height: 0.6rem;
+    width: 70%;
+    margin: 0 auto;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
 /* Radio */
 .radio-group {
     display: flex;

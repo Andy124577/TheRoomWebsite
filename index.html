@@ -325,7 +325,20 @@
         });
 
         // ===== SLOTS =====
+        function renderSkeletons() {
+            const grid = document.getElementById('slotsGrid');
+            grid.innerHTML = '';
+            for (let i = 0; i < 6; i++) {
+                grid.innerHTML += `
+                    <div class="slot-card skeleton">
+                        <div class="slot-skeleton-time"></div>
+                        <div class="slot-skeleton-status"></div>
+                    </div>`;
+            }
+        }
+
         async function loadSlots() {
+            renderSkeletons();
             let takenSlots = [];
             try {
                 const res = await fetch('/api/slots');
