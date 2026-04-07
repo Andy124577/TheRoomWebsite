@@ -28,7 +28,7 @@
                         <span class="countdown-label">Minutes</span>
                     </div>
                 </div>
-                <a href="#" class="btn-outline">S'inscrire</a>
+                <a href="#" class="btn-outline open-modal">S'inscrire</a>
             </div>
         </section>
 
@@ -134,7 +134,7 @@
         <section class="cta">
             <h2>Prêt à entrer dans</h2>
             <p class="cta-title glitch-text">THE <span>ROOM</span> ?</p>
-            <a href="#" class="btn-primary">S'inscrire</a>
+            <a href="#" class="btn-primary open-modal">S'inscrire</a>
         </section>
     </main>
 
@@ -152,8 +152,99 @@
         </div>
     </footer>
 
+    <!-- Registration Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+            <!-- Formulaire -->
+            <div id="formView">
+                <button class="modal-close" id="modalClose" aria-label="Fermer">&times;</button>
+                <div class="modal-header">
+                    <p class="modal-eyebrow">Réservation</p>
+                    <h2 class="modal-title mokoto" id="modalTitle">S'inscrire</h2>
+                    <div class="accent-bar"></div>
+                </div>
+
+                <form id="registrationForm" novalidate>
+
+                    <!-- Email -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Contact du groupe</h3>
+                        <div class="form-group">
+                            <label for="groupEmail">Adresse email</label>
+                            <input type="email" id="groupEmail" name="email" placeholder="votre@email.com">
+                            <span class="field-error" id="emailError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Créneau -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Créneau horaire</h3>
+                        <p class="form-section-hint">Sélectionnez votre heure d'entrée — 2 mai 2026</p>
+                        <div class="slots-grid" id="slotsGrid"></div>
+                        <input type="hidden" id="selectedSlot" name="slot">
+                        <span class="field-error" id="slotError"></span>
+                    </div>
+
+                    <!-- Expérience -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Expérience Escape Game</h3>
+                        <p class="form-section-hint">Avez-vous déjà fait un escape game ?</p>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="experience" value="tous">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Oui, tout le monde</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="experience" value="moitie">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">La moitié du groupe</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="experience" value="aucun">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Aucun d'entre nous</span>
+                            </label>
+                        </div>
+                        <span class="field-error" id="experienceError"></span>
+                    </div>
+
+                    <!-- Joueurs -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Les 5 joueurs</h3>
+                        <div class="players-list" id="playersList"></div>
+                        <span class="field-error" id="playersError"></span>
+                    </div>
+
+                    <div class="form-footer">
+                        <span class="form-error-global" id="formErrorGlobal"></span>
+                        <button type="submit" class="btn-primary form-submit" id="submitBtn">
+                            <span class="submit-text">Confirmer l'inscription</span>
+                            <span class="submit-loading" style="display:none;">Envoi en cours...</span>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Confirmation -->
+            <div id="successView" style="display:none;">
+                <div class="success-content">
+                    <div class="success-checkmark">&#10003;</div>
+                    <h3 class="success-title mokoto">Inscription confirmée</h3>
+                    <p class="success-message">Un email de confirmation a été envoyé à<br><strong id="confirmedEmail"></strong></p>
+                    <p class="success-slot">Votre créneau : <span id="confirmedSlot" class="text-tertiary"></span></p>
+                    <button class="btn-outline" id="successClose">Fermer</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <script>
-        const eventDate = new Date('2026-05-02T18:00:00');
+        // ===== COUNTDOWN =====
+        const eventDate = new Date('2026-05-02T20:00:00');
 
         function updateCountdown() {
             const now = new Date();
@@ -178,14 +269,230 @@
         updateCountdown();
         setInterval(updateCountdown, 60000);
 
-        // Mobile nav toggle
-        const toggle = document.querySelector('.navbar-toggle');
-        const links = document.querySelector('.navbar-links');
-        if (toggle) {
-            toggle.addEventListener('click', () => {
-                links.classList.toggle('open');
-                toggle.classList.toggle('active');
+        // ===== CONFIGURATION =====
+        // TODO: Collez votre URL Google Apps Script ici après déploiement
+        const APPS_SCRIPT_URL = '';
+
+        const SLOTS = [
+            { time: '20:00', label: '20h00' },
+            { time: '21:00', label: '21h00' },
+            { time: '22:00', label: '22h00' },
+            { time: '23:00', label: '23h00' },
+            { time: '00:00', label: '00h00' },
+            { time: '01:00', label: '01h00' },
+        ];
+
+        // ===== MODAL =====
+        const overlay   = document.getElementById('modalOverlay');
+        const formView  = document.getElementById('formView');
+        const successView = document.getElementById('successView');
+        const form      = document.getElementById('registrationForm');
+
+        function openModal() {
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            loadSlots();
+        }
+
+        function closeModal() {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                formView.style.display = '';
+                successView.style.display = 'none';
+                form.reset();
+                document.getElementById('selectedSlot').value = '';
+                document.querySelectorAll('.slot-card').forEach(c => c.classList.remove('selected'));
+                clearErrors();
+                const btn = document.getElementById('submitBtn');
+                btn.disabled = false;
+                btn.querySelector('.submit-text').style.display = '';
+                btn.querySelector('.submit-loading').style.display = 'none';
+            }, 300);
+        }
+
+        document.querySelectorAll('.open-modal').forEach(btn => {
+            btn.addEventListener('click', e => { e.preventDefault(); openModal(); });
+        });
+
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('successClose').addEventListener('click', closeModal);
+
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) closeModal();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+        });
+
+        // ===== SLOTS =====
+        async function loadSlots() {
+            let takenSlots = [];
+            if (APPS_SCRIPT_URL) {
+                try {
+                    const res = await fetch(`${APPS_SCRIPT_URL}?action=getSlots`);
+                    const data = await res.json();
+                    takenSlots = data.takenSlots || [];
+                } catch (_) {}
+            }
+            renderSlots(takenSlots);
+        }
+
+        function renderSlots(takenSlots) {
+            const grid = document.getElementById('slotsGrid');
+            grid.innerHTML = '';
+            SLOTS.forEach(slot => {
+                const taken = takenSlots.includes(slot.time);
+                const card = document.createElement('div');
+                card.className = 'slot-card' + (taken ? ' taken' : '');
+                card.dataset.time = slot.time;
+                card.innerHTML = `
+                    <span class="slot-time">${slot.label}</span>
+                    <span class="slot-status">${taken ? 'Complet' : 'Disponible'}</span>
+                `;
+                if (!taken) {
+                    card.addEventListener('click', () => selectSlot(slot.time, card));
+                }
+                grid.appendChild(card);
             });
+        }
+
+        function selectSlot(time, card) {
+            document.querySelectorAll('.slot-card:not(.taken)').forEach(c => {
+                c.classList.remove('selected');
+                c.querySelector('.slot-status').textContent = 'Disponible';
+            });
+            card.classList.add('selected');
+            card.querySelector('.slot-status').textContent = 'Sélectionné';
+            document.getElementById('selectedSlot').value = time;
+            document.getElementById('slotError').textContent = '';
+        }
+
+        // ===== PLAYERS =====
+        (function renderPlayers() {
+            const list = document.getElementById('playersList');
+            for (let i = 1; i <= 5; i++) {
+                list.innerHTML += `
+                    <div class="player-card">
+                        <div class="player-card-header">Joueur ${i}</div>
+                        <div class="player-fields">
+                            <div class="form-group">
+                                <label for="nom${i}">Nom</label>
+                                <input type="text" id="nom${i}" name="nom${i}" placeholder="Dupont">
+                            </div>
+                            <div class="form-group">
+                                <label for="prenom${i}">Prénom</label>
+                                <input type="text" id="prenom${i}" name="prenom${i}" placeholder="Jean">
+                            </div>
+                            <div class="form-group">
+                                <label for="age${i}">Âge</label>
+                                <input type="number" id="age${i}" name="age${i}" placeholder="18" min="15" max="99">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        })();
+
+        // ===== VALIDATION =====
+        function clearErrors() {
+            document.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+            document.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+        }
+
+        function validateForm() {
+            clearErrors();
+            let valid = true;
+
+            const email = document.getElementById('groupEmail');
+            if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                document.getElementById('emailError').textContent = 'Veuillez entrer une adresse email valide.';
+                email.classList.add('invalid');
+                valid = false;
+            }
+
+            if (!document.getElementById('selectedSlot').value) {
+                document.getElementById('slotError').textContent = 'Veuillez sélectionner un créneau.';
+                valid = false;
+            }
+
+            if (!document.querySelector('input[name="experience"]:checked')) {
+                document.getElementById('experienceError').textContent = 'Veuillez sélectionner une option.';
+                valid = false;
+            }
+
+            let playerError = false;
+            for (let i = 1; i <= 5; i++) {
+                const nom    = document.getElementById(`nom${i}`);
+                const prenom = document.getElementById(`prenom${i}`);
+                const age    = document.getElementById(`age${i}`);
+                if (!nom.value.trim())                    { nom.classList.add('invalid');    playerError = true; valid = false; }
+                if (!prenom.value.trim())                 { prenom.classList.add('invalid'); playerError = true; valid = false; }
+                if (!age.value || Number(age.value) < 15) { age.classList.add('invalid');   playerError = true; valid = false; }
+            }
+            if (playerError) {
+                document.getElementById('playersError').textContent = 'Veuillez remplir tous les champs joueurs (âge minimum 15 ans).';
+            }
+
+            return valid;
+        }
+
+        // ===== SUBMIT =====
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            if (!validateForm()) return;
+
+            const btn    = document.getElementById('submitBtn');
+            const txtBtn = btn.querySelector('.submit-text');
+            const loader = btn.querySelector('.submit-loading');
+            btn.disabled = true;
+            txtBtn.style.display = 'none';
+            loader.style.display = '';
+
+            const players = [];
+            for (let i = 1; i <= 5; i++) {
+                players.push({
+                    nom:    document.getElementById(`nom${i}`).value.trim(),
+                    prenom: document.getElementById(`prenom${i}`).value.trim(),
+                    age:    document.getElementById(`age${i}`).value,
+                });
+            }
+
+            const payload = {
+                email:      document.getElementById('groupEmail').value.trim(),
+                slot:       document.getElementById('selectedSlot').value,
+                experience: document.querySelector('input[name="experience"]:checked').value,
+                players,
+            };
+
+            if (APPS_SCRIPT_URL) {
+                try {
+                    const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+                    const data = await res.json();
+                    if (data.success) {
+                        showSuccess(payload.email, payload.slot);
+                    } else if (data.error === 'slot_taken') {
+                        document.getElementById('slotError').textContent = 'Ce créneau vient d\'être pris. Veuillez en choisir un autre.';
+                        loadSlots();
+                        btn.disabled = false; txtBtn.style.display = ''; loader.style.display = 'none';
+                    } else { throw new Error(); }
+                } catch (_) {
+                    document.getElementById('formErrorGlobal').textContent = 'Une erreur est survenue. Veuillez réessayer.';
+                    btn.disabled = false; txtBtn.style.display = ''; loader.style.display = 'none';
+                }
+            } else {
+                // Mode développement : simulation sans Apps Script
+                setTimeout(() => showSuccess(payload.email, payload.slot), 900);
+            }
+        });
+
+        function showSuccess(email, slot) {
+            document.getElementById('confirmedEmail').textContent = email;
+            document.getElementById('confirmedSlot').textContent = SLOTS.find(s => s.time === slot)?.label || slot;
+            formView.style.display = 'none';
+            successView.style.display = '';
+            document.getElementById('registrationModal').scrollTop = 0;
         }
     </script>
 </body>
