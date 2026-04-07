@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyFGfOQJ5vIyHtQZu_yNpQNaAd3gm7l_Uc8zgfDWa3xq5yOOiOPWXQERyhb5Pq0W7uxg/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuvChdzOcuKgUMhdHjuxOXchapO2l65WERqvldd1qVj3OdTfZgyoBjgqL8BCUPr509g/exec';
 
 module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {

@@ -1,7 +1,7 @@
 const https = require('https');
 const http = require('http');
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx72M_1Sk_qKFR6VrcFGsFDA0lWPUYDUwSwSRCwiWWiAxpp5iXHw5zz3J97PkIuU60HuA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuvChdzOcuKgUMhdHjuxOXchapO2l65WERqvldd1qVj3OdTfZgyoBjgqL8BCUPr509g/exec';
 
 function getFromScript(url) {
     return new Promise((resolve, reject) => {
